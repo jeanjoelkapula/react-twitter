@@ -1,25 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {Routes, Route, Navigate} from "react-router-dom";
+import { useSelector } from "react-redux";
+
+//components
+import AuthBase from "./pages/auth/AuthBase";
+import LoginForm from "./components/auth/LoginForm"
+import RegisterForm from "./components/auth/RegisterForm";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const user = useSelector(state => state.user)
+
+    function handleLogin(values) {
+        // print the form values to the console
+        console.log(values)
+    }
+
+    function handleRegister(values) {
+        // print the form values to the console
+        console.log(values)
+    }
+
+    return (
+        <div className="App">
+            <Routes>
+                <Route exact path="/" 
+                element=
+                    {
+                        user.is_authenticated ?
+                        <h1>User is logged in</h1>:
+                        <Navigate to="/login" />
+                    }
+                >
+                    
+                </Route>
+                <Route path="/login" 
+                    element=
+                    {
+                        <AuthBase>
+                            <LoginForm onSubmit={handleLogin}/>
+                        </AuthBase>
+                    }
+                >
+                    
+                </Route>
+                <Route path="/register"
+                    element=
+                    {
+                        <AuthBase>
+                            <RegisterForm onSubmit={handleRegister}/>
+                        </AuthBase>
+                    }
+                >
+
+                </Route>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
