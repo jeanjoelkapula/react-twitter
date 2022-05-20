@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Post from "./Post";
+import NoPostAvailable from "./NoPostAvailable";
 
 export default function PostsContainer (props) {
     const posts = useSelector(state => state.posts)
@@ -10,7 +11,11 @@ export default function PostsContainer (props) {
 
     return (
         <div className="post-container disable-scrollbars">
-            {postElements}
+            {
+                posts.length > 0 ?
+                postElements :
+                <NoPostAvailable />
+            }
         </div>
     )
 }
