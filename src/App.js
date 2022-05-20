@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import AuthBase from "./pages/auth/AuthBase";
 import LoginForm from "./components/auth/LoginForm"
 import RegisterForm from "./components/auth/RegisterForm";
+import Home from "./pages/Home";
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
                 element=
                     {
                         user.is_authenticated ?
-                        <h1>User is logged in</h1>:
+                        <Home /> :
                         <Navigate to="/login" />
                     }
                 >

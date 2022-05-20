@@ -1,6 +1,6 @@
 const initialState = {
     username: '',
-    is_authenticated: false
+    is_authenticated: true
 }
 
 export default function userReducer (state = initialState, action) {
