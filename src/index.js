@@ -7,6 +7,7 @@ import store from "./redux"
 import reportWebVitals from './reportWebVitals';
 
 import './assets/styles/main.css';
+import "./assets/styles/chat.css";
 import "./assets/styles/util.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

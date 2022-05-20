@@ -8,6 +8,7 @@ import LoginForm from "./components/auth/LoginForm";
 import RegisterForm from "./components/auth/RegisterForm";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Messages from "./pages/Messages";
 
 
 function App() {
@@ -58,6 +59,15 @@ function App() {
                         {
                             user.is_authenticated ?
                             <Profile /> :
+                            <Navigate to="/login" />
+                        } 
+                />
+
+                <Route path="/messages"
+                    element = 
+                        {
+                            user.is_authenticated ?
+                            <Messages /> :
                             <Navigate to="/login" />
                         } 
                 />

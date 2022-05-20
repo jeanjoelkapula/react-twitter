@@ -34,16 +34,16 @@ export default function LeftSideBar(props) {
                         </a>
                     </li>
                     <li className="menu-item">
-                        <a className="menu-link">
+                        <Link to="/messages" className="menu-link">
                             <i className="far fa-envelope"></i>
                             <span className="badge chat-badge m-badge menu-icon-badge" id="messages-badge-">4</span> 
-                        </a>
-                        <a className="menu-link-text">
+                        </Link>
+                        <Link to="/messages" className="menu-link-text">
                             <div >
                                 <span>Messages</span>
                             </div>   
                             <div className="badge chat-badge m-badge" id="messages-badge-" style={{marginLeft: "5px"}}>4</div> 
-                        </a>
+                        </Link>
                     </li>
                     <li className="menu-item">
                         <Link to="/profile" className="menu-link">
