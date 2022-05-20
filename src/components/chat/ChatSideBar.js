@@ -1,5 +1,5 @@
 import React from "react";
-import ChatList from "../components/ChatList";
+import ChatList from "./ChatList";
 
 export default function ChatSideBar(props) {
 
