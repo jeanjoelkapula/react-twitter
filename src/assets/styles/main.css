@@ -723,6 +723,7 @@
     background-color: black;
     color: white;
     border-top: 1px solid #ffffff38;
+    border-bottom: 1px solid #ffffff38;
   }
   .side-main .write-twit img {
     margin-bottom: 20px;

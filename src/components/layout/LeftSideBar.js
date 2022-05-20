@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "react-router-dom"
 
 export default function LeftSideBar(props) {
     return (
@@ -45,14 +46,14 @@ export default function LeftSideBar(props) {
                         </a>
                     </li>
                     <li className="menu-item">
-                        <a className="menu-link" href="{% url 'profile' user.id %}">
+                        <Link to="/profile" className="menu-link">
                             <i className="fas fa-user-circle"></i>
-                        </a>
-                        <a className="menu-link-text">
-                            <div >
+                        </Link>
+                        <Link to="/profile" className="menu-link-text">
+                            <div>
                                 <span>Profile</span>
                             </div>    
-                        </a>
+                        </Link>
                     </li>
                     
                     <li className="menu-item">

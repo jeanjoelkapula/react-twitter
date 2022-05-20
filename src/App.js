@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 
 //components
 import AuthBase from "./pages/auth/AuthBase";
-import LoginForm from "./components/auth/LoginForm"
+import LoginForm from "./components/auth/LoginForm";
 import RegisterForm from "./components/auth/RegisterForm";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -26,35 +27,40 @@ function App() {
         <div className="App">
             <Routes>
                 <Route exact path="/" 
-                element=
-                    {
-                        user.is_authenticated ?
-                        <Home /> :
-                        <Navigate to="/login" />
-                    }
-                >
+                    element=
+                        {
+                            user.is_authenticated ?
+                            <Home /> :
+                            <Navigate to="/login" />
+                        }
+                />
                     
-                </Route>
                 <Route path="/login" 
                     element=
-                    {
-                        <AuthBase>
-                            <LoginForm onSubmit={handleLogin}/>
-                        </AuthBase>
-                    }
-                >
+                        {
+                            <AuthBase>
+                                <LoginForm onSubmit={handleLogin}/>
+                            </AuthBase>
+                        }
+                />
                     
-                </Route>
                 <Route path="/register"
                     element=
-                    {
-                        <AuthBase>
-                            <RegisterForm onSubmit={handleRegister}/>
-                        </AuthBase>
-                    }
-                >
+                        {
+                            <AuthBase>
+                                <RegisterForm onSubmit={handleRegister}/>
+                            </AuthBase>
+                        }
+                />
 
-                </Route>
+                <Route path="/profile"
+                    element = 
+                        {
+                            user.is_authenticated ?
+                            <Profile /> :
+                            <Navigate to="/login" />
+                        } 
+                />
             </Routes>
         </div>
     );
