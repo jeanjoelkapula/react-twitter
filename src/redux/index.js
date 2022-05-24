@@ -1,16 +1,19 @@
-import {combineReducers, createStore} from "redux"
+import {combineReducers, createStore, applyMiddleware} from "redux";
+import thunk from "redux-thunk";
 import { reducer as reduxFormReducer } from 'redux-form';
-import userReducer from "./user"
+import userAuthReducer from "./userAuth"
 import postsReducer from "./posts";
 import chatsReducer from "./chats";
 import currentChatReducer from "./currentChat";
+import authReducer from "./authForm";
 
 const rootReducer = combineReducers({
-    user: userReducer,
+    auth: userAuthReducer,
     form: reduxFormReducer,
+    authFormData: authReducer,
     posts: postsReducer,
     chats: chatsReducer,
-    currentChat: currentChatReducer
-})
+    currentChat: currentChatReducer,
+});
 
-export default createStore(rootReducer)
+export default createStore(rootReducer, applyMiddleware(thunk));

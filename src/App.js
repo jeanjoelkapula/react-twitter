@@ -1,6 +1,5 @@
 import React from "react";
 import {Routes, Route, Navigate} from "react-router-dom";
-import { useSelector } from "react-redux";
 
 //components
 import AuthBase from "./pages/auth/AuthBase";
@@ -10,13 +9,55 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
 
+//hooks
+import {useSelector, useDispatch} from "react-redux";
+import { useEffect } from "react";
+
+//actions
+import {setAuthLoading, setAuthMessage} from "./redux/authForm";
+import { setCurrentUser, setAuthToken } from "./redux/userAuth";
+
+//helpers
+import { login } from "./helpers/authHelper";
+import { setAxiosAuthToken } from "./helpers/fetchHelper";
+import { isEmpty } from "./helpers/utils";
+
 
 function App() {
-    const user = useSelector(state => state.user)
 
-    function handleLogin(values) {
-        // print the form values to the console
-        console.log(values)
+    //to allow hook call not directly in function component
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        // check localStorage
+        if (!isEmpty(localStorage.getItem("token"))) {
+            dispatch(setAuthToken(localStorage.getItem("token")));
+        }
+
+        if (!isEmpty(localStorage.getItem("user"))) {
+            const user = JSON.parse(localStorage.getItem("user"));
+            dispatch(setCurrentUser(user));
+        }
+    },[]);
+    
+    const auth = useSelector(state => state.auth);
+
+    async function handleLogin(values) {
+        
+        dispatch(setAuthLoading(true));
+
+        const {data} = await login (values);
+
+        if (data.error) {
+            dispatch(setAuthMessage(data.error));
+        }
+        else {
+            dispatch(setAuthToken(data.auth.token));
+            dispatch(setCurrentUser(data.auth.user));
+            dispatch(setAuthMessage(""));
+        }
+
+        dispatch(setAuthLoading(false));
     }
 
     function handleRegister(values) {
@@ -30,7 +71,7 @@ function App() {
                 <Route exact path="/" 
                     element=
                         {
-                            user.is_authenticated ?
+                            auth.user ?
                             <Home /> :
                             <Navigate to="/login" />
                         }
@@ -40,7 +81,11 @@ function App() {
                     element=
                         {
                             <AuthBase>
-                                <LoginForm onSubmit={handleLogin}/>
+                                {
+                                    auth.user ?
+                                    <Navigate to="/" />:
+                                    <LoginForm onSubmit={handleLogin}/>
+                                }
                             </AuthBase>
                         }
                 />
@@ -57,7 +102,7 @@ function App() {
                 <Route path="/profile"
                     element = 
                         {
-                            user.is_authenticated ?
+                            auth.user ?
                             <Profile /> :
                             <Navigate to="/login" />
                         } 
@@ -66,7 +111,7 @@ function App() {
                 <Route path="/messages"
                     element = 
                         {
-                            user.is_authenticated ?
+                            auth.user ?
                             <Messages /> :
                             <Navigate to="/login" />
                         } 

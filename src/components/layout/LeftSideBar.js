@@ -1,7 +1,17 @@
-import React from "react"
-import {Link} from "react-router-dom"
+import React from "react";
+import {Link} from "react-router-dom";
+import { logout } from "../../helpers/authHelper";
+import { useDispatch } from "react-redux";
+import { resetAuth } from "../../redux/userAuth";
 
 export default function LeftSideBar(props) {
+    const dispatch = useDispatch();
+
+    async function handleLogout () {
+        await logout();
+        dispatch(resetAuth());
+    }
+
     return (
         <div className="twitter-wrap">
             <div className="side-left">
@@ -58,9 +68,9 @@ export default function LeftSideBar(props) {
                     
                     <li className="menu-item">
                         <a className="menu-link">
-                            <i className="fas fa-arrow-circle-left"></i>
+                            <i className="fas fa-arrow-circle-left" onClick={handleLogout}></i>
                         </a>
-                        <a className="menu-link-text">
+                        <a className="menu-link-text" onClick={handleLogout}>
                             <div >
                                 <span>Log out</span>
                             </div>

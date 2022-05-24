@@ -1,11 +1,23 @@
 import React from "react"
 import { reduxForm, Field } from 'redux-form';
 import {Link} from "react-router-dom";
+import { useEffect } from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {setAuthLoading, setAuthMessage} from "../../redux/authForm";
 
 let LoginForm = props => {
+    
+    const { handleSubmit, pristine, submitting  } = props;
+    const authFormData = useSelector(state => state.authFormData);
+    const dispatch = useDispatch();
 
-    const { handleSubmit } = props
+    useEffect(()=>{
+        dispatch(setAuthLoading(false));
+        dispatch(setAuthMessage(null));
 
+    },[]);
+
+    
     return (
         <form className="auth-form validate-form" onSubmit={handleSubmit}>
             <span className="auth-form-logo">
@@ -25,9 +37,15 @@ let LoginForm = props => {
                 <Field className="input100" component="input" type="password" name="password" placeholder="Password" />
                 <span className="focus-input100" data-placeholder=""></span>
             </div>
+            
+     
 
+                <div>
+                    {authFormData.message}
+                </div>
+            
             <div className="container-auth-form-btn">
-                <button className="auth-form-btn" type="submit">
+                <button className="auth-form-btn" type="submit" disabled={pristine || submitting}>
                     Login
                 </button>
             </div>

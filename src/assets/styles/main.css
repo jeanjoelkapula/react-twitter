@@ -591,6 +591,10 @@
     border-radius: 50%;
   }
   
+  .menu-link, .menu-link-text {
+    cursor: pointer;
+  }
+
   .menu-icon-badge {
       display: none !important;
       position: absolute;
