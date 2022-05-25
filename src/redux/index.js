@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { reducer as reduxFormReducer } from 'redux-form';
 import userAuthReducer from "./userAuth"
 import postsReducer from "./posts";
+import postsPaginationReducer from "./postPagination";
 import chatsReducer from "./chats";
 import currentChatReducer from "./currentChat";
 import authReducer from "./authForm";
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     form: reduxFormReducer,
     authFormData: authReducer,
     posts: postsReducer,
+    postPagination: postsPaginationReducer,
     chats: chatsReducer,
     currentChat: currentChatReducer,
     post_modal_shown: PostModalReducer
