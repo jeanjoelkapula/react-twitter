@@ -3,7 +3,7 @@ import Wrapper from "../components/layout/Wrapper";
 import LeftSideBar from "../components/layout/LeftSideBar"
 import RightSideBar from "../components/layout/RightSideBar"
 import MainContentWrapper from "../components/layout/MainContentWrapper";
-import HomePostForm from "../components/HomePostForm";
+import PostForm from "../components/PostForm";
 import PostsContainer from "../components/PostsContainer";
 
 export default function Home(props) {
@@ -12,7 +12,7 @@ export default function Home(props) {
         <Wrapper>
             <LeftSideBar />
             <MainContentWrapper title="Home">
-                <HomePostForm />
+                <PostForm />
                 <PostsContainer />
             </MainContentWrapper>
             <RightSideBar />

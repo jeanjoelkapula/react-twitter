@@ -13,3 +13,10 @@ export async function logout() {
 
     return result;
 }
+
+export async function register (data) {
+    const url = "auth/register/";
+    const result = await POST(url,{}, data);
+
+    return result;
+}

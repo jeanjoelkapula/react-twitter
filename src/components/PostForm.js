@@ -1,7 +1,7 @@
 import React from "react"
 import { reduxForm, Field } from 'redux-form';
 
-let HomePostForm = props => {
+let PostForm = props => {
 
     const { handleSubmit } = props
 
@@ -25,16 +25,16 @@ let HomePostForm = props => {
     }
 
     return (
-        <div className="">
+        <div className="twit-form-container">
             <form action="/" method="POST">
                 <div className="write-twit">
-                    <div className="post-user" style={iconDivStyle}>
+                    <div className="post-user icon-div">
                         <i className="fas fa-user-circle"></i>
                     </div>
-                    <Field name="post" id="post" cols="30" rows="3" type="text" component="textarea" placeholder="what's happening?" />
+                    <Field name="post" id="post" cols="30" rows="3" type="text" component="textarea" placeholder="what's happening?" />	
                 </div>
-                <div style={buttonDivStyle}>
-                    <button type="submit" className="add-twit-button" style={buttonStyle}>
+                <div className="modal-button-container">
+                    <button className="add-twit-button modal-button">
                         New Post
                     </button>
                 </div>
@@ -44,8 +44,8 @@ let HomePostForm = props => {
     )
 }
 
-HomePostForm = reduxForm({
-    form: 'homePostForm'
-})(HomePostForm)
+PostForm = reduxForm({
+    form: 'postForm'
+})(PostForm)
 
-export default HomePostForm
+export default PostForm

@@ -6,6 +6,7 @@ import postsReducer from "./posts";
 import chatsReducer from "./chats";
 import currentChatReducer from "./currentChat";
 import authReducer from "./authForm";
+import PostModalReducer from "./postModal";
 
 const rootReducer = combineReducers({
     auth: userAuthReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     posts: postsReducer,
     chats: chatsReducer,
     currentChat: currentChatReducer,
+    post_modal_shown: PostModalReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk));

@@ -8,19 +8,25 @@ import RegisterForm from "./components/auth/RegisterForm";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
+import { ToastContainer } from "react-toastify";
+import ErrorList from "./components/ErrorList";
+import PostForm from "./components/PostForm";
+import PostModal from "./components/PostModal";
 
 //hooks
 import {useSelector, useDispatch} from "react-redux";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 //actions
-import {setAuthLoading, setAuthMessage} from "./redux/authForm";
+import {setAuthLoading} from "./redux/authForm";
 import { setCurrentUser, setAuthToken } from "./redux/userAuth";
 
 //helpers
-import { login } from "./helpers/authHelper";
+import { login, register } from "./helpers/authHelper";
 import { setAxiosAuthToken } from "./helpers/fetchHelper";
 import { isEmpty } from "./helpers/utils";
+import Post from "./components/Post";
 
 
 function App() {
@@ -48,25 +54,37 @@ function App() {
 
         const {data} = await login (values);
 
-        if (data.error) {
-            dispatch(setAuthMessage(data.error));
+        if (data.errors) {
+            toast.error(<ErrorList errors={data.errors} />);
         }
         else {
             dispatch(setAuthToken(data.auth.token));
             dispatch(setCurrentUser(data.auth.user));
-            dispatch(setAuthMessage(""));
         }
 
         dispatch(setAuthLoading(false));
     }
 
-    function handleRegister(values) {
-        // print the form values to the console
-        console.log(values)
+    async function handleRegister(values) {
+        dispatch(setAuthLoading(true));
+
+        const {data} = await register (values);
+
+        if (data.errors) {
+            toast.error(<ErrorList errors={data.errors} />);
+        }
+        else {
+            dispatch(setAuthToken(data.auth.token));
+            dispatch(setCurrentUser(data.auth.user));
+        }
+
+        dispatch(setAuthLoading(false));
     }
 
     return (
         <div className="App">
+            <ToastContainer hideProgressBar={true} newestOnTop={true} />
+            <PostModal />
             <Routes>
                 <Route exact path="/" 
                     element=
@@ -94,7 +112,11 @@ function App() {
                     element=
                         {
                             <AuthBase>
-                                <RegisterForm onSubmit={handleRegister}/>
+                                {
+                                    auth.user ?
+                                    <Navigate to="/" /> :
+                                    <RegisterForm onSubmit={handleRegister}/>
+                                }
                             </AuthBase>
                         }
                 />

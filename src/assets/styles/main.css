@@ -721,13 +721,16 @@
     color: white;
     font-size: 20px;
   }
-  .side-main .write-twit, .profile-top {
+
+  .twit-form-container {
+    border-bottom: 1px solid #ffffff36;
+  }
+  .write-twit, .profile-top {
     padding: 20px 10px;
     display: flex;
     background-color: black;
     color: white;
     border-top: 1px solid #ffffff38;
-    border-bottom: 1px solid #ffffff38;
   }
   .side-main .write-twit img {
     margin-bottom: 20px;
@@ -740,6 +743,12 @@
     font-size: 20px;
     outline: 0 none;
     background-color: black;
+  }
+
+  .write-twit .icon-div {
+    width: "auto";
+    padding-left: "10px";
+    padding-right: "10px";
   }
   
   .main-top-bar {
@@ -1023,7 +1032,14 @@
     }
   
     .post-user {
-      width: 20%;
+      width: 12%;
+    }
+
+  }
+  @media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 630px !important;
+        margin: 1.75rem auto;
     }
   }
   
@@ -1128,4 +1144,24 @@
   
   .chat-wrapper {
       width: 80%;
+  }
+
+  .post-modal {
+    background: #a8a8a84d;
+  }
+
+  .modal-content {
+    background: black; border-radius: 15px !important;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #ffffff6e !important;
+  }
+
+  .modal-button {
+    width: 100px; height: 40px; margin-top: 15px; margin-bottom: 20px; margin-right: 6%;
+  }
+
+  .modal-button-container {
+    display: flex; justify-content: right;
   }

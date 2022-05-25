@@ -38,12 +38,6 @@ let LoginForm = props => {
                 <span className="focus-input100" data-placeholder=""></span>
             </div>
             
-     
-
-                <div>
-                    {authFormData.message}
-                </div>
-            
             <div className="container-auth-form-btn">
                 <button className="auth-form-btn" type="submit" disabled={pristine || submitting}>
                     Login

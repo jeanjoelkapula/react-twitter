@@ -1,10 +1,20 @@
 import React from "react"
 import { reduxForm, Field } from 'redux-form';
+import { useEffect } from "react";
 import {Link} from "react-router-dom";
-
+import {useSelector, useDispatch} from "react-redux";
+import {setAuthLoading, setAuthMessage} from "../../redux/authForm";
 
 let RegisterForm = props => {
-    const { handleSubmit } = props
+    const { handleSubmit, pristine, submitting  } = props;
+    const authFormData = useSelector(state => state.authFormData);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(setAuthLoading(false));
+        dispatch(setAuthMessage(null));
+
+    },[]);
 
     return (
         <form className="auth-form validate-form" onSubmit={handleSubmit}>
@@ -31,13 +41,8 @@ let RegisterForm = props => {
                 <span className="focus-input100" data-placeholder=""></span>
             </div>
 
-            <div className="wrap-input100 validate-input" data-validate="Enter password">
-                <Field className="input100" type="password" component="input" name="confirmation" placeholder="Confirm Password" />
-                <span className="focus-input100" data-placeholder=""></span>
-            </div>
-
             <div className="container-auth-form-btn">
-                <button className="auth-form-btn" type="submit">
+                <button className="auth-form-btn" type="submit" disabled={pristine || submitting}>
                     Register
                 </button>
             </div>
