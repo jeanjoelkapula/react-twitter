@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import { logout } from "../../helpers/authHelper";
+import { logout } from "../../helpers/fetchHelpers";
 import { useDispatch } from "react-redux";
 import { resetAuth } from "../../redux/userAuth";
 

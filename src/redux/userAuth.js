@@ -1,4 +1,4 @@
-import { setAxiosAuthToken } from "../helpers/fetchHelper";
+import { setAxiosAuthToken } from "../helpers/axios";
 
 const initialState = {
     user: null,
@@ -11,7 +11,6 @@ const RESET = "RESET";
 
 export function setAuthToken(payload) {
     return (dispatch) => {
-
         setAxiosAuthToken(payload);
         localStorage.setItem("token", payload);
 

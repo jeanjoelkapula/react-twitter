@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 export default function PostModal () {
     const post_modal_shown = useSelector(state => state.post_modal_shown);
-    console.log(post_modal_shown)
+
     const style = {
         display: post_modal_shown ? "block" : "none"
     };

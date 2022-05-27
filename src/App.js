@@ -21,12 +21,14 @@ import { toast } from "react-toastify";
 //actions
 import {setAuthLoading} from "./redux/authForm";
 import { setCurrentUser, setAuthToken } from "./redux/userAuth";
+import { addPosts, clearPosts } from "./redux/posts";
+import { setPostPage } from "./redux/postPagination";
 
 //helpers
-import { login, register } from "./helpers/authHelper";
-import { setAxiosAuthToken } from "./helpers/fetchHelper";
+import { login, register } from "./helpers/fetchHelpers";
 import { isEmpty } from "./helpers/utils";
 import Post from "./components/Post";
+import { getPosts } from "./helpers/fetchHelpers";
 
 
 function App() {
@@ -34,10 +36,13 @@ function App() {
     //to allow hook call not directly in function component
     const dispatch = useDispatch();
 
+    const auth = useSelector(state => state.auth);
+
     useEffect(()=>{
         // check localStorage
         if (!isEmpty(localStorage.getItem("token"))) {
             dispatch(setAuthToken(localStorage.getItem("token")));
+            
         }
 
         if (!isEmpty(localStorage.getItem("user"))) {
@@ -45,14 +50,29 @@ function App() {
             dispatch(setCurrentUser(user));
         }
     },[]);
+
+    useEffect(()=> {
+        async function requestPosts() {
+            const page = await getPosts();
+            const {results} = page;
+
+            dispatch(setPostPage(page));
+            dispatch(addPosts(results));
+            
+        }
+        
+        if (auth.user) {
+            requestPosts();
+        }
+        
+    });
     
-    const auth = useSelector(state => state.auth);
 
     async function handleLogin(values) {
         
         dispatch(setAuthLoading(true));
 
-        const {data} = await login (values);
+        const data = await login (values);
 
         if (data.errors) {
             toast.error(<ErrorList errors={data.errors} />);
@@ -68,7 +88,7 @@ function App() {
     async function handleRegister(values) {
         dispatch(setAuthLoading(true));
 
-        const {data} = await register (values);
+        const data = await register (values);
 
         if (data.errors) {
             toast.error(<ErrorList errors={data.errors} />);
@@ -86,8 +106,8 @@ function App() {
             <ToastContainer hideProgressBar={true} newestOnTop={true} />
             <PostModal />
             <Routes>
-                <Route exact path="/" 
-                    element=
+                <Route exact path ="/" 
+                    element =
                         {
                             auth.user ?
                             <Home /> :
@@ -95,8 +115,8 @@ function App() {
                         }
                 />
                     
-                <Route path="/login" 
-                    element=
+                <Route path ="/login" 
+                    element =
                         {
                             <AuthBase>
                                 {
@@ -108,8 +128,8 @@ function App() {
                         }
                 />
                     
-                <Route path="/register"
-                    element=
+                <Route path ="/register"
+                    element =
                         {
                             <AuthBase>
                                 {
@@ -121,7 +141,7 @@ function App() {
                         }
                 />
 
-                <Route path="/profile"
+                <Route path ="/profile"
                     element = 
                         {
                             auth.user ?
@@ -130,7 +150,7 @@ function App() {
                         } 
                 />
 
-                <Route path="/messages"
+                <Route path ="/messages"
                     element = 
                         {
                             auth.user ?

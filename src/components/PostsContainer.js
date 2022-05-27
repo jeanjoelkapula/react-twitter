@@ -6,7 +6,7 @@ import NoPostAvailable from "./NoPostAvailable";
 export default function PostsContainer (props) {
     const posts = useSelector(state => state.posts)
     const postElements = posts.map(post => (
-        <Post key={post}/>
+        <Post key={post.id} post={post} />
     ));
 
     return (
