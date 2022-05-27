@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Post(props) {
     
-    const {user, date_created, post, is_liked} = props.post;
+    const {user, date_created, post, is_liked, is_disliked} = props.post;
 
     return (
         <div className="post">
@@ -23,7 +23,7 @@ export default function Post(props) {
                         <span id="likes-20"></span>
                     </div>
                     <div className="post-button">
-                        <a id="dislike-20" data-post="20"><i className={`fas fa-heart-broken ${is_liked ? "" : "post-like-active"}`}></i></a>
+                        <a id="dislike-20" data-post="20"><i className={`fas fa-heart-broken ${is_disliked ? "post-like-active" : ""}`}></i></a>
                         <span id="dislikes-20"></span>
                     </div>
                 </div>

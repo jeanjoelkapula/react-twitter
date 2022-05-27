@@ -21,13 +21,12 @@ import { toast } from "react-toastify";
 //actions
 import {setAuthLoading} from "./redux/authForm";
 import { setCurrentUser, setAuthToken } from "./redux/userAuth";
-import { addPosts, clearPosts } from "./redux/posts";
+import { addPosts, addPost ,clearPosts } from "./redux/posts";
 import { setPostPage } from "./redux/postPagination";
 
 //helpers
 import { login, register } from "./helpers/fetchHelpers";
 import { isEmpty } from "./helpers/utils";
-import Post from "./components/Post";
 import { getPosts } from "./helpers/fetchHelpers";
 
 

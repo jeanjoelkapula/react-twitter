@@ -29,3 +29,10 @@ export async function getPosts(url = "posts/") {
 
     return result;
 }
+
+export async function createPost(data) {
+    const url = "post/";
+    const result = await POST(url, data);
+
+    return result;
+}

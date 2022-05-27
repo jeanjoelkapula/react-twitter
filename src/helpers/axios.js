@@ -7,7 +7,6 @@ export async function GET(url) {
 
     await axios.get(`${apiBaseURL}/${url}`)
     .then(response => {
-        console.log(response);
         const {data} = response;
         result = data;
     })
@@ -19,7 +18,6 @@ export async function GET(url) {
             error = {
                 message: error.response
             };
-            toast.error(JSON.stringify(error.response.data));
 
         } else if (error.message) {
             // the error message is available,
@@ -27,13 +25,11 @@ export async function GET(url) {
             error = {
                     message: error.message
                 };
-            toast.error(JSON.stringify(error.message));
         } else {
             // strange error, just show it
             error = {
                 message: error
             };
-            toast.error(JSON.stringify(error));
         }
 
         result = {
@@ -70,7 +66,6 @@ export async function POST(url, data)  {
             error = {
                 message: error.response
             };
-            toast.error(JSON.stringify(error.response.data));
 
         } else if (error.message) {
             // the error message is available,
@@ -78,13 +73,11 @@ export async function POST(url, data)  {
             error = {
                     message: error.message
                 };
-            toast.error(JSON.stringify(error.message));
         } else {
             // strange error, just show it
             error = {
                 message: error
             };
-            toast.error(JSON.stringify(error));
         }
 
         result = {

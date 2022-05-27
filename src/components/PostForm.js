@@ -3,30 +3,11 @@ import { reduxForm, Field } from 'redux-form';
 
 let PostForm = props => {
 
-    const { handleSubmit } = props
-
-    const buttonDivStyle = {
-        display: "flex",
-        justifyContent: "right",
-        borderBottom: "1px solid #ffffff38"
-    }
-    const buttonStyle = {
-        width: "100px",
-        height: "40px",
-        marginTop: "15px",
-        marginBottom: "20px",
-        marginRight: "6px"
-    }
-
-    const iconDivStyle = {
-        width: "auto",
-        paddingLeft: "10px",
-        paddingRight: "10px"
-    }
+    const {handleSubmit} = props;
 
     return (
         <div className="twit-form-container">
-            <form action="/" method="POST">
+            <form action="/" method="POST" onSubmit={handleSubmit}>
                 <div className="write-twit">
                     <div className="post-user icon-div">
                         <i className="fas fa-user-circle"></i>
@@ -34,7 +15,7 @@ let PostForm = props => {
                     <Field name="post" id="post" cols="30" rows="3" type="text" component="textarea" placeholder="what's happening?" />	
                 </div>
                 <div className="modal-button-container">
-                    <button className="add-twit-button modal-button">
+                    <button className="add-twit-button modal-button" type="">
                         New Post
                     </button>
                 </div>
