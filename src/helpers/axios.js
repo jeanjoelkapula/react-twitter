@@ -2,10 +2,18 @@ import axios from "axios";
 import { toast } from "react-toastify";
 const apiBaseURL = 'http://127.0.0.1:8000/api';
 
-export async function GET(url) {
+export async function GET(url, relative_path = true) {
     var result = null;  
+    var url_path;
 
-    await axios.get(`${apiBaseURL}/${url}`)
+    if (relative_path) {
+        url_path = `${apiBaseURL}/${url}`;
+    }   
+    else {
+        url_path = url; 
+    }
+
+    await axios.get(url_path)
     .then(response => {
         const {data} = response;
         result = data;
@@ -46,12 +54,12 @@ export async function GET(url) {
 
 const headers = 'some headers';
 
-export async function POST(url, data)  {
+export async function POST(url, data, method="POST")  {
     var result = null;
 
     await axios({
         url: `${apiBaseURL}/${url}`,
-        method: 'POST',
+        method: method,
         data,
     })
     .then(response => {

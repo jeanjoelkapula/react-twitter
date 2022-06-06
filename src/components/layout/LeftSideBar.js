@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Link} from "react-router-dom";
 import { logout } from "../../helpers/fetchHelpers";
 import { useDispatch } from "react-redux";
 import { resetAuth } from "../../redux/userAuth";
+import { setModalShown } from "../../redux/postModal";
 
 export default function LeftSideBar(props) {
     const dispatch = useDispatch();
@@ -10,6 +11,14 @@ export default function LeftSideBar(props) {
     async function handleLogout () {
         await logout();
         dispatch(resetAuth());
+    }
+
+    function openModal() {
+        dispatch(setModalShown(true));
+    }
+
+    function closeModal() {
+        dispatch(setModalShown(false))
     }
 
     return (
@@ -78,12 +87,12 @@ export default function LeftSideBar(props) {
                     </li>
 
                     <li className="menu-item">
-                        <a className="menu-link add-twit" data-toggle="modal" data-target="#twit-modal">
+                        <a className="menu-link add-twit" data-toggle="modal" data-target="#twit-modal" onClick={openModal}>
                             <i className="fas fa-feather-alt"></i>
                         </a>
                     </li>
                     <li className="menu-item ">
-                        <button id="menu-twit-button" className="add-twit-button" data-toggle="modal" data-target="#twit-modal">
+                        <button id="menu-twit-button" onClick={openModal} className="add-twit-button" data-toggle="modal" data-target="#twit-modal">
                             New Post
                         </button>
                     </li>

@@ -1155,7 +1155,11 @@
   }
 
   .modal-header {
-    border-bottom: 1px solid #ffffff6e !important;
+    border-bottom: none !important;
+  }
+
+  .modal-body {
+      padding-bottom: 56px;
   }
 
   .modal-button {

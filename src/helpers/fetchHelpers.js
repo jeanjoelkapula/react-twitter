@@ -25,7 +25,12 @@ export async function register (data) {
 }
 
 export async function getPosts(url = "posts/") {
-    const result = await GET(url);
+    var relative_path = true;
+
+    if (url !=="posts/") {
+        relative_path = false;
+    }
+    const result = await GET(url, relative_path);
 
     return result;
 }
@@ -33,6 +38,37 @@ export async function getPosts(url = "posts/") {
 export async function createPost(data) {
     const url = "post/";
     const result = await POST(url, data);
+
+    return result;
+}
+
+export async function likePost(post) {
+    const url = `post/${post}/like/`;
+    const data = {
+        is_like: true
+    };
+    const result = await POST(url,data, "PUT");
+
+    return result;
+}
+
+export async function dislikePost(post) {
+    const url = `post/${post}/like/`;
+    const data = {
+        is_like: false
+    };
+    const result = await POST(url,data, "PUT");
+
+    return result;
+}
+
+export async function unlikePost(post) {
+    const url = `post/${post}/unlike/`;
+
+    const data = {
+        unlike: true
+    };
+    const result = await POST(url,data, "PUT");
 
     return result;
 }

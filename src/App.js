@@ -54,7 +54,6 @@ function App() {
         async function requestPosts() {
             const page = await getPosts();
             const {results} = page;
-
             dispatch(setPostPage(page));
             dispatch(addPosts(results));
             
