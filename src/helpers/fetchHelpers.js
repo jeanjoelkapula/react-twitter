@@ -35,6 +35,17 @@ export async function getPosts(url = "posts/") {
     return result;
 }
 
+export async function getUserPosts(url) {
+    var relative_path = true;
+
+    if (url.includes("http")) {
+        relative_path = false;
+    }
+    const result = await GET(url, relative_path);
+
+    return result;
+}
+
 export async function createPost(data) {
     const url = "post/";
     const result = await POST(url, data);
@@ -69,6 +80,14 @@ export async function unlikePost(post) {
         unlike: true
     };
     const result = await POST(url,data, "PUT");
+
+    return result;
+}
+
+export async function getProfile(username) {
+    const url = `${username}/profile/`;
+
+    const result = await GET(url);
 
     return result;
 }

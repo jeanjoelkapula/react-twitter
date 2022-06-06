@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { likePost, dislikePost, unlikePost } from "../helpers/fetchHelpers";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -97,7 +98,7 @@ export default function Post(props) {
             </div>
             <div className="post-content">
                 <div className="post-username">
-                    <a href="/profile/4/">{user.username}</a>
+                    <Link to={`/profile/${user.username}/`}>{user.username}</Link>
                     <span>{date_created}</span>
                 </div>
                 <div className="post-text">

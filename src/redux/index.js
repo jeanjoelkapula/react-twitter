@@ -8,6 +8,7 @@ import chatsReducer from "./chats";
 import currentChatReducer from "./currentChat";
 import authReducer from "./authForm";
 import PostModalReducer from "./postModal";
+import profileReducer from "./profile";
 
 const rootReducer = combineReducers({
     auth: userAuthReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     postPagination: postsPaginationReducer,
     chats: chatsReducer,
     currentChat: currentChatReducer,
-    post_modal_shown: PostModalReducer
+    post_modal_shown: PostModalReducer,
+    profile: profileReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk));

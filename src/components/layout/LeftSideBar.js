@@ -32,14 +32,14 @@ export default function LeftSideBar(props) {
                     </li>
 
                     <li className="menu-item">
-                        <a className="menu-link">
+                        <Link to="/" className="menu-link">
                             <i className="fas fa-home"></i>
-                        </a>
-                        <a className="menu-link-text">
+                        </Link>
+                        <Link to="/" className="menu-link-text">
                             <div>
                                 <span>All Posts</span>
                             </div>    
-                        </a>
+                        </Link>
                     </li>
 
                     <li className="menu-item">

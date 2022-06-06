@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 //actions
 import {setAuthLoading} from "./redux/authForm";
 import { setCurrentUser, setAuthToken } from "./redux/userAuth";
-import { addPosts, addPost ,clearPosts } from "./redux/posts";
+import { addPosts, addPost ,clearPosts, setPosts } from "./redux/posts";
 import { setPostPage } from "./redux/postPagination";
 
 //helpers
@@ -49,22 +49,6 @@ function App() {
             dispatch(setCurrentUser(user));
         }
     },[]);
-
-    useEffect(()=> {
-        async function requestPosts() {
-            const page = await getPosts();
-            const {results} = page;
-            dispatch(setPostPage(page));
-            dispatch(addPosts(results));
-            
-        }
-        
-        if (auth.user) {
-            requestPosts();
-        }
-        
-    });
-    
 
     async function handleLogin(values) {
         
@@ -139,7 +123,16 @@ function App() {
                         }
                 />
 
-                <Route path ="/profile"
+                <Route exact path ="/profile"
+                    element = 
+                        {
+                            auth.user ?
+                            <Profile /> :
+                            <Navigate to="/login" />
+                        } 
+                />
+
+                <Route path ="/profile/:username"
                     element = 
                         {
                             auth.user ?
