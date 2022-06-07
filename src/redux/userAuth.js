@@ -8,6 +8,7 @@ const initialState = {
 const SET_TOKEN = "SET_TOKEN";
 const SET_USER = "SET_USER";
 const RESET = "RESET";
+const SET_FOLLOWING = "SET_FOLLOWING";
 
 export function setAuthToken(payload) {
     return (dispatch) => {
@@ -44,6 +45,13 @@ export function resetAuth() {
     }
 }
 
+export function setFollowing(payload) {
+    return {
+        type: SET_FOLLOWING,
+        payload
+    }
+}
+
 
 export default function userAuthReducer (state = initialState, action) {
     switch(action.type) {
@@ -59,6 +67,15 @@ export default function userAuthReducer (state = initialState, action) {
             }
         case RESET:
             return initialState
+        case SET_FOLLOWING:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    followers: action.payload.followers,
+                    followees: action.payload.followees
+                }
+            }
         default:
             return state
     }

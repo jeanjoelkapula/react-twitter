@@ -31,7 +31,7 @@ export default function Profile(props) {
     const profile = useSelector(state => state.profile);
     const user = useSelector(state => state.auth.user);
     let {username} = useParams();
- 
+
     useEffect(()=>{
         async function requestProfile() {
             const data = await getProfile(username);
@@ -41,7 +41,7 @@ export default function Profile(props) {
             else {
                 dispatch(setProfile(data));
             }
-        }
+        }    
 
         if (username !== undefined) {
             requestProfile();
@@ -50,7 +50,7 @@ export default function Profile(props) {
             dispatch(setProfile(user));
         }
 
-    },[]);
+    }, [username]);
     
 
     useEffect(()=> {
@@ -73,7 +73,7 @@ export default function Profile(props) {
             requestPosts();
         }
         
-    });
+    }, [profile]);
     
     return (
         <Wrapper>

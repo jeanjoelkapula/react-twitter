@@ -1169,3 +1169,7 @@
   .modal-button-container {
     display: flex; justify-content: right;
   }
+
+  .tab-nav {
+    width: 50%;
+  }

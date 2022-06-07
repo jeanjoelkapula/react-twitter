@@ -1,5 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { followUser } from "../helpers/fetchHelpers";
+import ErrorList from "./ErrorList";
+import { toast } from "react-toastify";
+import { setProfile } from "../redux/profile";
+import { setFollowing } from "../redux/userAuth";
 
 export default function ProfileHeader(props) {
 
@@ -12,10 +18,24 @@ export default function ProfileHeader(props) {
         marginRight: "0px"
     };
 
+    const dispatch = useDispatch();
     const profile = useSelector(state => state.profile); 
     const user = useSelector(state => state.auth.user);
     const {username, date_joined, followers, followees} = props.user;
     const is_following = profile.followers.includes(user.username);
+
+    async function handleFollowClick() {
+        const data = await followUser(username, !is_following);
+
+        if (data.errors) {
+            toast.error(<ErrorList errors={data.errros} />);
+        }
+        else {
+            const {follower, followee} = data;
+            dispatch(setProfile(followee));
+            dispatch(setFollowing({followers:follower.followers, followees: follower.followees}))
+        }
+    }
 
     return (
         <div className="profile-top">
@@ -31,29 +51,34 @@ export default function ProfileHeader(props) {
                 </div>
                 <div className="profile-following">
                     <div>
-                        <span id="followees">{followees.length}</span><p><a href="/1/following/">Following</a></p>
+                        <span id="followees">{followees.length}</span><p><Link to={`/profile/${username}/followees`}>Following</Link></p>
                     </div>
                     <div>
-                        <span id="followers">{followers.length}</span><p><a href="/1/followers/">Followers</a></p>
+                        <span id="followers">{followers.length}</span><p><Link to={`/profile/${username}/followers`}>Followers</Link></p>
                     </div>
-                    <div style={divStyle}>                    
-                        <div>
-                            <a href="/messages?chat='new'&amp;s=1&amp;r=2" class="profile-message-button">
-                                <i class="far fa-envelope"></i>
-                            </a>
-                        </div>
-                        {
-                            is_following ?
-                                <div className="unfollow-button">
-                                    <button data-id="2"><span style={followButtonStyle}>Following</span></button>
+                    {
+                        (
+                            (profile.username !== user.username) && 
+                            <div style={divStyle}>                    
+                                <div>
+                                    <a href="/messages?chat='new'&amp;s=1&amp;r=2" className="profile-message-button">
+                                        <i className="far fa-envelope"></i>
+                                    </a>
                                 </div>
-                            :
-                            <div className="follow-button">
-                                <button data-id="2"><span style={followButtonStyle}>Follow</span></button>
+                                {
+                                    is_following ?
+                                        <div className="unfollow-button">
+                                            <button onClick={handleFollowClick}><span style={followButtonStyle}>Following</span></button>
+                                        </div>
+                                    :
+                                    <div className="follow-button">
+                                        <button onClick={handleFollowClick}><span style={followButtonStyle}>Follow</span></button>
+                                    </div>
+                                }
+                    
                             </div>
-                        }
-              
-                    </div>
+                        )
+                    }
                 </div>
             </div>
         </div>

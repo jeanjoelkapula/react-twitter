@@ -7,6 +7,7 @@ import LoginForm from "./components/auth/LoginForm";
 import RegisterForm from "./components/auth/RegisterForm";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Following from "./pages/Following";
 import Messages from "./pages/Messages";
 import { ToastContainer } from "react-toastify";
 import ErrorList from "./components/ErrorList";
@@ -123,7 +124,7 @@ function App() {
                         }
                 />
 
-                <Route exact path ="/profile"
+                <Route path ="/profile"
                     element = 
                         {
                             auth.user ?
@@ -137,6 +138,15 @@ function App() {
                         {
                             auth.user ?
                             <Profile /> :
+                            <Navigate to="/login" />
+                        } 
+                />
+
+                <Route path ="/profile/:username/:followTab"
+                    element = 
+                        {
+                            auth.user ?
+                            <Following /> :
                             <Navigate to="/login" />
                         } 
                 />

@@ -91,3 +91,14 @@ export async function getProfile(username) {
 
     return result;
 }
+
+export async function followUser(username, follow=true) {
+    const url = `${username}/follow/`;
+    const data = {
+        follow
+    };
+
+    const result = await POST(url, data, "PUT");
+
+    return result;
+}
