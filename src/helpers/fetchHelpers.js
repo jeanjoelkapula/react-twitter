@@ -35,6 +35,17 @@ export async function getPosts(url = "posts/") {
     return result;
 }
 
+export async function getFollowingPosts(url = "posts/following") {
+    var relative_path = true;
+
+    if (url !=="posts/following") {
+        relative_path = false;
+    }
+    const result = await GET(url, relative_path);
+
+    return result;
+}
+
 export async function getUserPosts(url) {
     var relative_path = true;
 

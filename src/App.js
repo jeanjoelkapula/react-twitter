@@ -93,7 +93,16 @@ function App() {
                     element =
                         {
                             auth.user ?
-                            <Home /> :
+                            <Home following={false} /> :
+                            <Navigate to="/login" />
+                        }
+                />
+
+                <Route path ="/following" 
+                    element =
+                        {
+                            auth.user ?
+                            <Home following={true} /> :
                             <Navigate to="/login" />
                         }
                 />

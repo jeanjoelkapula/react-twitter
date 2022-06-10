@@ -12,7 +12,7 @@ import { addPost, setPosts } from "../redux/posts";
 import { setPostPage } from "../redux/postPagination";
 
 //helpers
-import { createPost, getPosts } from "../helpers/fetchHelpers";
+import { createPost, getPosts, getFollowingPosts } from "../helpers/fetchHelpers";
 import { toast } from "react-toastify";
 
 //hooks
@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Home(props) {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
+    const {following} = props;
 
     async function handleCreatePost(values) {
         const data = await createPost(values);
@@ -35,7 +36,14 @@ export default function Home(props) {
 
     useEffect(()=> {
         async function requestPosts() {
-            const page = await getPosts();
+            let page;
+            if (following) {
+                page = await getFollowingPosts();
+            }
+            else {
+                page = await getPosts();
+            }
+             
             const {results} = page;
             dispatch(setPostPage(page));        
             dispatch(setPosts(results));

@@ -16,7 +16,7 @@ export default function PostsContainer (props) {
     const postElements = posts.map(post => (
         <Post key={post.id} post={post} />
     ));
-
+    console.log(pagination)
     const containerRef = useRef(null);
     const dispatch = useDispatch();
     async function trackScrolling () {
