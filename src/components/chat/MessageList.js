@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Message from "./Message";
 export default function MessageList(props) {
-    const messages = useSelector(state => state.currentChat.messages);
-    const messageElements = messages.map(message => (
+
+    const messageElements = props.messages.map(message => (
         <Message 
             key = {message.id}
             message = {message}

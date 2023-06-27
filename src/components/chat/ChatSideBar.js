@@ -15,8 +15,8 @@ export default function ChatSideBar(props) {
             </div>
             <div className="flex-grow-1 position-relative">
                 <div id="chat-list" className="chat-contacts list-group disable-scrollbars py-3 ps">
-                    <ChatList />
-                </div>
+                    <ChatList />      
+                </div>  
             </div>
         </div>
     )

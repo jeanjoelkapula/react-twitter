@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from './App';
 import {Provider} from "react-redux"
 import {BrowserRouter as Router} from "react-router-dom";
-import store from "./redux"
+import store from "./redux";
+import WebSocketWrapper from "./components/WebSocketWrapper";
 import reportWebVitals from './reportWebVitals';
 
 import './assets/styles/main.css';
@@ -16,7 +17,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
         <Router>
-            <App />
+            <WebSocketWrapper>
+                <App />
+            </WebSocketWrapper>
         </Router>
     </Provider>,
 );

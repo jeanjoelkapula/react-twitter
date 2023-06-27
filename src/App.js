@@ -14,21 +14,27 @@ import ErrorList from "./components/ErrorList";
 import PostForm from "./components/PostForm";
 import PostModal from "./components/PostModal";
 
+
 //hooks
 import {useSelector, useDispatch} from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 
 //actions
 import {setAuthLoading} from "./redux/authForm";
 import { setCurrentUser, setAuthToken } from "./redux/userAuth";
 import { addPosts, addPost ,clearPosts, setPosts } from "./redux/posts";
+import { setChats } from "./redux/chats";
 import { setPostPage } from "./redux/postPagination";
+import { connect } from "./redux/websocket";
 
 //helpers
 import { login, register } from "./helpers/fetchHelpers";
 import { isEmpty } from "./helpers/utils";
-import { getPosts } from "./helpers/fetchHelpers";
+import { getPosts, getChats } from "./helpers/fetchHelpers";
+
+//contexts
+import WebSocketContext from "./contexts/WebSocketContext";
 
 
 function App() {
@@ -37,6 +43,8 @@ function App() {
     const dispatch = useDispatch();
 
     const auth = useSelector(state => state.auth);
+    const websocket = useContext(WebSocketContext);
+    const chats = useSelector(state => state.chats);
 
     useEffect(()=>{
         // check localStorage
@@ -51,6 +59,24 @@ function App() {
         }
     },[]);
 
+    useEffect(()=> {
+        async function requestChats() {
+            var data = await getChats();
+
+            if (data.errors) {
+                toast.error(<ErrorList errors={data.errors} />);
+            }
+            else {
+                dispatch(setChats(data.chats));
+            }
+        }
+
+        if (auth.user) {
+            dispatch(connect({auth: auth}));
+            requestChats();
+        }
+    }, [auth.user])
+
     async function handleLogin(values) {
         
         dispatch(setAuthLoading(true));
@@ -63,10 +89,18 @@ function App() {
         else {
             dispatch(setAuthToken(data.auth.token));
             dispatch(setCurrentUser(data.auth.user));
+
         }
 
         dispatch(setAuthLoading(false));
     }
+
+    if (websocket) {
+        websocket.onmessage = async function(e) {
+            const data = JSON.parse(e.data);                 
+        };
+    }
+
 
     async function handleRegister(values) {
         dispatch(setAuthLoading(true));
@@ -161,6 +195,15 @@ function App() {
                 />
 
                 <Route path ="/messages"
+                    element = 
+                        {
+                            auth.user ?
+                            <Messages /> :
+                            <Navigate to="/login" />
+                        } 
+                />
+
+                <Route path ="/messages/:chatId"
                     element = 
                         {
                             auth.user ?

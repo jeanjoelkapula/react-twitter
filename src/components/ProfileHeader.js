@@ -61,8 +61,11 @@ export default function ProfileHeader(props) {
                             (profile.username !== user.username) && 
                             <div style={divStyle}>                    
                                 <div>
-                                    <a href="/messages?chat='new'&amp;s=1&amp;r=2" className="profile-message-button">
+                                    <Link to={`/messages`} className="profile-message-button">
                                         <i className="far fa-envelope"></i>
+                                    </Link>
+                                    <a href="/messages?chat='new'&amp;s=1&amp;r=2" >
+                                        
                                     </a>
                                 </div>
                                 {

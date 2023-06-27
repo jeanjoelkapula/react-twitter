@@ -9,6 +9,7 @@ import currentChatReducer from "./currentChat";
 import authReducer from "./authForm";
 import PostModalReducer from "./postModal";
 import profileReducer from "./profile";
+import webSocketReducer from "./websocket";
 
 const rootReducer = combineReducers({
     auth: userAuthReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     chats: chatsReducer,
     currentChat: currentChatReducer,
     post_modal_shown: PostModalReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    webSocket: webSocketReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk));

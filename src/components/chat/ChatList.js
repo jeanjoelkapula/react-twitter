@@ -5,7 +5,7 @@ import Chat from "./Chat";
 export default function ChatList (props) {
     const chats = useSelector(state => state.chats)
     const chatElements = chats.map(chat => (
-        <Chat key={chat}/>
+        <Chat key={chat.id} chat={chat}/>
     ));
 
     return (

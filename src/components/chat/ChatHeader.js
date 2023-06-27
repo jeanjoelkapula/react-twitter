@@ -7,7 +7,6 @@ export default function ChatHeader(props) {
         color: "#8e8d8d !important"
     }
 
-    const user = useSelector(state => state.currentChat.user);
     return (
         <>
             <div className="flex-grow-0 py-3 pr-4 pl-lg-4" style={{borderBottom: "1px solid #ffffff38"}}>
@@ -17,7 +16,7 @@ export default function ChatHeader(props) {
                         <span className="badge badge-dot badge-success indicator"></span>
                         <a><i className="fas fa-user-circle"></i></a>
                     </div>
-                    <div id="chat-header-username" className="media-body pl-3 text-w">{user}</div>
+                    <div id="chat-header-username" className="media-body pl-3 text-w">{props.username}</div>
                 </div>
             </div>
         </>

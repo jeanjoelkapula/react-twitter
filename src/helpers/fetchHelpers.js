@@ -113,3 +113,11 @@ export async function followUser(username, follow=true) {
 
     return result;
 }
+
+export async function getChats() {
+    const url = "chats/";
+
+    const result = await GET(url);
+
+    return result;
+}
