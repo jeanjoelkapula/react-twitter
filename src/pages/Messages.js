@@ -22,24 +22,47 @@ import { getChats } from "../helpers/fetchHelpers";
 
 //actions
 import { setCurrentChat } from "../redux/currentChat";
+import { addChat } from "../redux/chats";
 
 import { toast } from "react-toastify";
 
 export default function Messages(props) {
     const chats = useSelector(state => state.chats);
-    const {chatId} = useParams();
+    const {recipient} = useParams();
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.auth.user);
-    let currentChat = null;
-    let username = "";
+    let currentChat = useSelector(state => state.currentChat);
+    let exists = true;
 
-    if (chatId !== undefined) {
-        currentChat = chats.find(chat => chat.id == chatId);
+    Array.prototype.move = function(from, to) {
+        this.splice(to, 0, this.splice(from, 1)[0]);
+    };
 
-        dispatch(setCurrentChat(currentChat));
-        username = currentChat.participants.find(username => username !== currentUser.username);
-    }
+    useEffect(()=>{
+        if ((recipient !== undefined)) {
+            let chat = chats.find(chat => chat.participants.includes(currentUser.username) && chat.participants.includes(recipient))
+            
+            if (chat){
+                const from = chats.findIndex(c =>  chat.id == c.id);
+                
+                dispatch(setCurrentChat(chat));
+                chats.move(from, 0);
+            }
+            else {
+                chat = {
+                    id: 0,
+                    participants: [recipient, currentUser.username],
+                    chat_messages: []
+                };
+        
+                dispatch(addChat(chat));
+                dispatch(setCurrentChat(chat));
+            }
+    
+        }
+    },[recipient]); 
 
+    
 
     return (
         <Wrapper>
@@ -47,14 +70,14 @@ export default function Messages(props) {
             <ChatContentWrapper>
                 <ChatSideBar />
                 {
-                    chatId === undefined ?
+                    (recipient === undefined) ?
                         <ChatContainer>
                             <NoChatSelected/>
                         </ChatContainer>
                         :
                     <ChatContainer>
-                        <ChatHeader username={username}/>
-                        <MessageList messages={ chatId === undefined ? [] : currentChat.chat_messages}/>
+                        <ChatHeader username={recipient}/>
+                        <MessageList messages={ recipient === undefined ? [] : currentChat.chat_messages}/>
                         <MessageForm />
                     </ChatContainer>
                 }

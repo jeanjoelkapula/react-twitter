@@ -203,7 +203,7 @@ function App() {
                         } 
                 />
 
-                <Route path ="/messages/:chatId"
+                <Route path ="/messages/:recipient"
                     element = 
                         {
                             auth.user ?

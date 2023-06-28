@@ -1,4 +1,9 @@
-const initialState = null;
+const initialState = {
+    id: 0,
+    isSelected: false,
+    participants:[],
+    chat_messages:[]
+};
 const SET_CURRENT_CHAT = "SET_CURRENT_CHAT";
 
 export function setCurrentChat(payload) {
