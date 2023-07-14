@@ -3,7 +3,7 @@ import React from "react";
 export default function Message(props) {
 
     const message = {...props.message}
-    const orientation = message.incoming ? "chat-message-right" : "chat-message-left";
+    const orientation = message.incoming ? "chat-message-left" : "chat-message-right";
 
     return (
         <div className={`${orientation} mb-4`}>

@@ -1,7 +1,7 @@
 import React from "react";
 
 //hooks
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 
@@ -23,10 +23,15 @@ import { getChats } from "../helpers/fetchHelpers";
 //actions
 import { setCurrentChat } from "../redux/currentChat";
 import { addChat } from "../redux/chats";
+import { reset } from "redux-form";
 
 import { toast } from "react-toastify";
 
+//contexts
+import WebSocketContext from "../contexts/WebSocketContext";
+
 export default function Messages(props) {
+    const websocket = useContext(WebSocketContext);
     const chats = useSelector(state => state.chats);
     const {recipient} = useParams();
     const dispatch = useDispatch();
@@ -63,6 +68,18 @@ export default function Messages(props) {
     },[recipient]); 
 
     
+    async function handleSendMessage(values) {
+        const data = {
+            chat: currentChat.id,
+            recipient: recipient,
+            message: values.message
+        };
+
+        websocket.send(JSON.stringify(data));
+        dispatch(reset('messageForm'));
+    }
+
+    
 
     return (
         <Wrapper>
@@ -78,7 +95,7 @@ export default function Messages(props) {
                     <ChatContainer>
                         <ChatHeader username={recipient}/>
                         <MessageList messages={ recipient === undefined ? [] : currentChat.chat_messages}/>
-                        <MessageForm />
+                        <MessageForm onSubmit={handleSendMessage}/>
                     </ChatContainer>
                 }
                 

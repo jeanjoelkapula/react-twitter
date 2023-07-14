@@ -27,6 +27,9 @@ import { addPosts, addPost ,clearPosts, setPosts } from "./redux/posts";
 import { setChats } from "./redux/chats";
 import { setPostPage } from "./redux/postPagination";
 import { connect } from "./redux/websocket";
+import { addMessage } from "./redux/chats";
+import { setMessageCount } from "./redux/unreadMessageCount";
+import { setCurrentChat, addCurrentChatMessage } from "./redux/currentChat";
 
 //helpers
 import { login, register } from "./helpers/fetchHelpers";
@@ -45,6 +48,7 @@ function App() {
     const auth = useSelector(state => state.auth);
     const websocket = useContext(WebSocketContext);
     const chats = useSelector(state => state.chats);
+    const currentChat = useSelector(state => state.currentChat);
 
     useEffect(()=>{
         // check localStorage
@@ -68,6 +72,7 @@ function App() {
             }
             else {
                 dispatch(setChats(data.chats));
+                dispatch(setMessageCount(data.unread_count));
             }
         }
 
@@ -95,12 +100,16 @@ function App() {
         dispatch(setAuthLoading(false));
     }
 
-    if (websocket) {
-        websocket.onmessage = async function(e) {
-            const data = JSON.parse(e.data);                 
-        };
-    }
 
+        if (websocket) {
+            websocket.onmessage = event => {
+                const message = JSON.parse(event.data);
+                dispatch(addMessage(message));
+                if (currentChat.id === message.chat) {
+                    dispatch(addCurrentChatMessage(message.message));
+                }
+            }
+        }
 
     async function handleRegister(values) {
         dispatch(setAuthLoading(true));

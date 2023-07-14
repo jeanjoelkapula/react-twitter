@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import {Link} from "react-router-dom";
 import { logout } from "../../helpers/fetchHelpers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetAuth } from "../../redux/userAuth";
 import { setModalShown } from "../../redux/postModal";
 
 export default function LeftSideBar(props) {
     const dispatch = useDispatch();
-
+    const chats = useSelector(state => state.chats);
+    const unreadMessageCount = useSelector(state => state.unreadMessageCount);
+    console.log(unreadMessageCount)
     async function handleLogout () {
         await logout();
         dispatch(resetAuth());
@@ -55,13 +57,13 @@ export default function LeftSideBar(props) {
                     <li className="menu-item">
                         <Link to="/messages" className="menu-link">
                             <i className="far fa-envelope"></i>
-                            <span className="badge chat-badge m-badge menu-icon-badge" id="messages-badge-">4</span> 
+                            <span className="badge chat-badge m-badge menu-icon-badge" id="messages-badge-">{unreadMessageCount}</span> 
                         </Link>
                         <Link to="/messages" className="menu-link-text">
                             <div >
                                 <span>Messages</span>
                             </div>   
-                            <div className="badge chat-badge m-badge" id="messages-badge-" style={{marginLeft: "5px"}}>4</div> 
+                            <div className="badge chat-badge m-badge" id="messages-badge-" style={{marginLeft: "5px"}}>{unreadMessageCount}</div> 
                         </Link>
                     </li>
                     <li className="menu-item">

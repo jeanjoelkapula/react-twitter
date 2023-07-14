@@ -1,5 +1,8 @@
 import React from "react";
-import {reduxForm, Field} from "redux-form"
+import {reduxForm, Field} from "redux-form";
+
+import { useContext } from "react";
+
 
 let MessageForm = props => {
 
@@ -8,10 +11,11 @@ let MessageForm = props => {
         backgroundColor: "black", 
         color: "white"
     }
+    const {handleSubmit} = props;
     
     return (
         <div className="flex-grow-0 py-3 px-4" style={{borderTop: "1px solid #ffffff38"}}>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="input-group">
                     <Field id="chat-message-input" component="input" name="message" type="text" className="form-control chat-input" placeholder="Type your message" style={inputStyle} />
                     <div className="input-group-append">
