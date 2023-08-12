@@ -37,7 +37,6 @@ export default function Messages(props) {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.auth.user);
     let currentChat = useSelector(state => state.currentChat);
-    let exists = true;
 
     Array.prototype.move = function(from, to) {
         this.splice(to, 0, this.splice(from, 1)[0]);

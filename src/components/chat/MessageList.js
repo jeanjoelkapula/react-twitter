@@ -1,19 +1,52 @@
 import React from "react";
 import { useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Message from "./Message";
+import ErrorList from "../ErrorList";
+import { setMessagesRead } from "../../helpers/fetchHelpers";
+import { updateMessagesReadStatus } from "../../redux/chats";
+import {toast} from "react-toastify";
 export default function MessageList(props) {
 
+    const user = useSelector(state => state.auth.user);
+    const currentChat = useSelector(state => state.currentChat);
     const messageEndRef = useRef(null);
+    const dispatch = useDispatch();
     const messageElements = props.messages.map(message => (
         <Message 
             key = {message.id}
             message = {message}
         />
-    ))
+    ));
+
+    let unread_count = 0;
+    props.messages.forEach(message => {
+        if (message.read == false && user.username == message.recipient) {
+            unread_count += 1;
+        }
+    });
+
 
     useEffect(() => {
-            messageEndRef.current?.scrollIntoView({ behavior: 'smooth' , block: 'end'});
+
+        async function updateMessagesStatus() {
+            const data = await setMessagesRead(currentChat.id, true);
+
+            if (data.errors) {
+                toast.error(<ErrorList errors={data.errors} />);
+            }
+            else {
+                dispatch(updateMessagesReadStatus({
+                    chat: currentChat.id,
+                    
+                }))
+            }
+        }
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' , block: 'end'});
+
+        if (unread_count > 0) {
+            updateMessagesStatus();
+        }
     });
 
     return (

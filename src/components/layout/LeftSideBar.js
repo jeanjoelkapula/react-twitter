@@ -8,8 +8,12 @@ import { setModalShown } from "../../redux/postModal";
 export default function LeftSideBar(props) {
     const dispatch = useDispatch();
     const chats = useSelector(state => state.chats);
-    const unreadMessageCount = useSelector(state => state.unreadMessageCount);
-    console.log(unreadMessageCount)
+    let unread_count = 0;
+
+    chats.forEach(chat => {
+        unread_count += chat.unread_count;
+    });
+
     async function handleLogout () {
         await logout();
         dispatch(resetAuth());
@@ -57,13 +61,13 @@ export default function LeftSideBar(props) {
                     <li className="menu-item">
                         <Link to="/messages" className="menu-link">
                             <i className="far fa-envelope"></i>
-                            <span className="badge chat-badge m-badge menu-icon-badge" id="messages-badge-">{unreadMessageCount}</span> 
+                            <span className={`badge chat-badge m-badge menu-icon-badge ${unread_count == 0 && `d-none`}`} id="messages-badge-">{unread_count}</span> 
                         </Link>
                         <Link to="/messages" className="menu-link-text">
                             <div >
                                 <span>Messages</span>
                             </div>   
-                            <div className="badge chat-badge m-badge" id="messages-badge-" style={{marginLeft: "5px"}}>{unreadMessageCount}</div> 
+                            <div className={`badge chat-badge m-badge ${unread_count == 0 && `d-none`}`} id="messages-badge-" style={{marginLeft: "5px"}}>{unread_count}</div> 
                         </Link>
                     </li>
                     <li className="menu-item">

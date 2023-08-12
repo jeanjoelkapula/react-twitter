@@ -121,3 +121,15 @@ export async function getChats() {
 
     return result;
 }
+
+export async function setMessagesRead(chat, read) {
+    const url = `messages/${chat}/status/`;
+
+    const data = {
+        read
+    };
+
+    const result = await POST(url, data, "PUT");
+
+    return result;
+}
